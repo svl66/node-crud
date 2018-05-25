@@ -1,0 +1,10 @@
+<div class="col-md-12">
+    <h1>Albums</h1>
+</div>
+<% data.forEach(function (data){ %>
+    <div class="col-4">
+        <img class="resimg" src="images/<%= data.cover %>"><br>
+        <p><strong><%= data.titel %></strong></p>
+    </div>
+    
+<% }); %>

@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Node med Bootstrap",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "SVL",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "ejs": "^2.5.6",
+    "express": "^4.14.1",
+    "express-fileupload": "^0.4.0",
+    "express-session": "^1.15.1",
+    "fetch": "^1.1.0",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "req-flash": "0.0.3"
+  }
+}

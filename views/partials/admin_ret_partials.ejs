@@ -1,0 +1,45 @@
+<h1>Ret</h1>
+
+    <p>Ret artist</p>
+        <% data.forEach(function(data){%>
+            <form class="handleFormData_<%= data.id %>">
+                <input type="hidden" name="fk_artist" value="<%= data.id %>">
+                <input type="text" name="artist" value="<%= data.navn %>">
+                <button class="btn btn-info">Gem rettelse</button><br><br>
+            </form>
+
+        
+<script>
+    (() => {
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.handleFormData_<%= data.id %>');
+            form.onsubmit = () => {
+                const data = JSON.stringify({
+                    'fk_artist': form.fk_artist.value,
+                    'artist': form.artist.value
+                });
+                fetch('http://localhost:1387/ret', {
+                    'method': 'POST',
+                    'headers': {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    },
+                    'mode': 'cors',
+                    'cache': 'default',
+                    'body': data
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if(data === "Fejlede"){
+                        alert('Fejl!');
+                    }else{
+                        alert('OK!'); // bliver ikke vist (?)
+                    }    
+                })
+            }
+        });
+    })();
+</script>
+
+<%}); %>

@@ -1,0 +1,13 @@
+<h1>Indsæt nyt cover</h1>
+<form class="handleFormData" id="handleFormData" ref="handleFormData" method="post" enctype="multipart/form-data" action="http://localhost:1387/upload" >
+    <p>Cover:</p>
+    <input type="file" name="coverFile">
+    <p>&nbsp;</p>
+    <select id="fk_album" name="fk_album">
+        <% data.forEach(function(data){%>
+            <option value="<%= data.id %>"><%= data.titel %> (<%= data.navn %>) </option>
+        <%}); %>
+    </select>
+    <p>&nbsp;</p>
+    <button>Gem</button>
+</form>

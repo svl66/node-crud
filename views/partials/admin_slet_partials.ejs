@@ -1,0 +1,43 @@
+<h1>Slet</h1>
+<form class="handleFormData" enctype="multipart/form-data">
+    <p>Slet artist (Du sletter også <strong>alle</strong> tilhørende albums):</p>
+    <select id="fk_artist" name="fk_artist">
+        <% data.forEach(function(data){%>
+            <option value="<%= data.id %>"><%= data.navn %></option>
+        <%}); %>
+    </select>
+    
+    <p>&nbsp;</p>
+    <button class="btn btn-danger" onclick="return confirm('Slet? Er du sikker?')">Slet</button>
+</form>
+<script>
+    (() => {
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.handleFormData');
+            form.onsubmit = () => {
+                const data = JSON.stringify({
+                    'fk_artist': form.fk_artist.value
+                });
+                fetch('http://localhost:1387/slet', {
+                    'method': 'POST',
+                    'headers': {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    },
+                    'mode': 'cors',
+                    'cache': 'default',
+                    'body': data
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if(data === "Fejlede"){
+                        alert('Fejl!');
+                    }else{
+                        alert('OK!'); // bliver ikke vist (?)
+                    }    
+                })
+            }
+        });
+    })();
+</script>

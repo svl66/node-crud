@@ -1,0 +1,46 @@
+<h1>Indsæt ny artist</h1>
+<form class="handleFormData">
+    <input type="text" class="form-control" id="artist" name="artist">
+    <br>
+    <select id="fk_land" name="fk_land">
+        <% data.forEach(function(data){%>
+            <option value="<%= data.id %>"><%= data.landenavn %></option>
+        <%}); %>
+    </select>
+    <p>&nbsp;</p>
+    <button>Gem</button>
+</form>
+<script>
+    (() => {
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const form = document.querySelector('.handleFormData');
+            form.onsubmit = () => {
+                const data = JSON.stringify({
+                    'artist': form.artist.value,
+                    'fk_land': form.fk_land.value
+                });
+                
+                fetch('http://localhost:1387/artist', {
+                    'method': 'POST',
+                    'headers': {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    },
+                    'mode': 'cors',
+                    'cache': 'default',
+                    'body': data
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if(data === "Fejlede"){
+                        alert('Fejl!');
+                    }else{
+                        alert('OK!'); // bliver ikke vist (?)
+                    }    
+                })
+            }
+        });
+    })();
+</script>

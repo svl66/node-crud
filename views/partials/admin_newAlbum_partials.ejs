@@ -1,0 +1,59 @@
+<h1>Indsæt nyt album</h1>
+<form class="handleFormData" enctype="multipart/form-data">
+    <input type="text" class="form-control" id="album" name="album">
+    <br>
+    <p>Artist:</p>
+    <select id="fk_artist" name="fk_artist">
+        <% data.forEach(function(data){%>
+            <option value="<%= data.id %>"><%= data.navn %></option>
+        <%}); %>
+    </select>
+    <p>&nbsp;</p>
+    <p>Udgivelsesår:</p>
+    <select id="udgivaar" name="udgivaar">
+            <option value="1900"> Vælg udgivelsesår </option>
+            <% detteAar = new Date().getFullYear(); %>
+            <% for(var i=1950; i <= detteAar; i++) { %>
+                <option value="<%= i %>"><%= i %></option>
+            <% } %>
+    </select>
+    <p>&nbsp;</p>
+    <!--
+    <p>Cover:</p>
+    <input type="file" name="coverFile" />-->
+    <p>&nbsp;</p>
+    <button class="btn btn-success">Gem</button>
+</form>
+<script>
+    (() => {
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.handleFormData');
+            form.onsubmit = () => {
+                const data = JSON.stringify({
+                    'album': form.album.value,
+                    'fk_artist': form.fk_artist.value,
+                    'udgivaar': form.udgivaar.value
+                });
+                fetch('http://localhost:1387/insertNewAlbum', {
+                    'method': 'POST',
+                    'headers': {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    },
+                    'mode': 'cors',
+                    'cache': 'default',
+                    'body': data
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if(data === "Fejlede"){
+                        alert('Fejl!');
+                    }else{
+                        alert('OK!'); // bliver ikke vist (?)
+                    }    
+                })
+            }
+        });
+    })();
+</script>
